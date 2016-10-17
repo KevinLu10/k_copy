@@ -15,7 +15,7 @@ setup(
     options=options,
     zipfile=None,
     data_files=[("",
-                 [r"KCopyIcon.ico", r"expect_tpl"]),
+                 [r"KCopyIcon.ico"]),
                 ],
     windows=[{
         "script": "KCopyMain.py",

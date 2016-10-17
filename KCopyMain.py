@@ -275,12 +275,15 @@ class MainFrame(wx.Frame):
         self.log_ctrl.Update()
         self.log_ctrl.ScrollLines(len(self.logs.split('\n')))
         # self.logs_lock.release()
-
     def get_change_files(self, root, timestamp):
         """获取root目录里面，修改时间在timestamp之后的绝对文件路径列表"""
         file_list = []
-        for root, dirs, files in os.walk(root):
+        for root, dirs, files in os.walk(root, topdown=True):
+            e_dirs = [dir for dir in dirs if dir.startswith('.')]
+            for dir in e_dirs:
+                dirs.remove(dir)
             for file_ in files:
+                if file_.startswith('.'): continue
                 file_path = os.path.join(root, file_)
                 mtime = os.path.getmtime(file_path)
                 if mtime > timestamp:
